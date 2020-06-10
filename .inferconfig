@@ -1,0 +1,14 @@
+{
+  "quandary-sources": [
+    {
+      "procedure": "com.scalesec.vulnado.LoginController.validateLoginRequest",
+      "kind": "UserControlledString"    
+    }
+  ],
+  "quandary-sinks": [
+    {
+      "procedure": "java.sql.Statement.executeQuery",
+      "kind": "SQLWrite"
+    }
+  ]
+}
