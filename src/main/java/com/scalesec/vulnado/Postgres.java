@@ -65,7 +65,7 @@ public class Postgres {
           pStatement = connection().prepareStatement(sql);
           pStatement.setString(1, UUID.randomUUID().toString());
           pStatement.setString(2, username);
-          pStatement.setString(3, md5(password));
+          pStatement.setString(3, password);
           pStatement.executeUpdate();
        } catch(Exception e) {
          e.printStackTrace();
