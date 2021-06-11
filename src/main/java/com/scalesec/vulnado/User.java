@@ -10,12 +10,12 @@ import io.jsonwebtoken.security.Keys;
 import javax.crypto.SecretKey;
 
 public class User {
-  public String id, username, hashedPassword;
+  public String id, username, password;
 
-  public User(String id, String username, String hashedPassword) {
+  public User(String id, String username, String password) {
     this.id = id;
     this.username = username;
-    this.hashedPassword = hashedPassword;
+    this.password = password;
   }
 
   public String token(String secret) {
