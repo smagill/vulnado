@@ -23,7 +23,11 @@ public class LoginController {
         input = validateLoginRequest(input);
 
         User user = User.fetch(input.username);
-        return new LoginResponse(user.token("dd"));
+        if (input.password.equals(user.password)) {
+            return new LoginResponse(user.token("dd"));
+        } else {
+            throw new Unauthorized("Access Denied");
+        }
     }
 
     private LoginRequest validateLoginRequest(LoginRequest input) {
