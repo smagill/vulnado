@@ -23,7 +23,7 @@ public class LoginController {
         input = validateLoginRequest(input);
 
         User user = User.fetch(input.username);
-        if (input.password.equals(user.password)) {
+        if (Postgres.md5(input.password).equals(user.hashedPassword)) {
             return new LoginResponse(user.token("dd"));
         } else {
             throw new Unauthorized("Access Denied");
