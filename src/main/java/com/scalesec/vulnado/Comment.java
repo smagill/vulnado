@@ -1,6 +1,8 @@
 package com.scalesec.vulnado;
 
 import org.apache.catalina.Server;
+
+import java.security.MessageDigest;
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
@@ -21,9 +23,12 @@ public class Comment {
   public static Comment create(String username, String body){
     long time = new Date().getTime();
     Timestamp timestamp = new Timestamp(time);
-    Comment comment = new Comment(UUID.randomUUID().toString(), username, body, timestamp);
     try {
-      if (comment.commit()) {
+        byte[] content = (username + body).getBytes();
+        Comment comment =
+          new Comment(MessageDigest.getInstance("md5").digest(content).toString(),
+                      username, body, timestamp);
+        if (comment.commit()) {
         return comment;
       } else {
         throw new BadRequest("Unable to save comment");
