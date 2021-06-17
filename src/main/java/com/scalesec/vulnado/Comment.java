@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.UUID;
+import java.math.BigInteger;
 
 public class Comment {
   public String id, username, body;
@@ -24,10 +25,10 @@ public class Comment {
     long time = new Date().getTime();
     Timestamp timestamp = new Timestamp(time);
     try {
-        byte[] content = (username + body).getBytes();
-        Comment comment =
-          new Comment(MessageDigest.getInstance("md5").digest(content).toString(),
-                      username, body, timestamp);
+        byte[] content = (username + body).getBytes("UTF-8");
+        byte[] hash = MessageDigest.getInstance("md5").digest(content);
+        String id = String.format("%032X", new BigInteger(1, hash));
+        Comment comment = new Comment(id, username, body, timestamp);
         if (comment.commit()) {
         return comment;
       } else {
